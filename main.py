@@ -46,7 +46,7 @@ class UserInput:
                     if correct:
                         dct[param] = int(dct[param])
                 if not correct:
-                    print(f'Некорректный тип параметра {param}; требуется {self.VALID_PARAMETERS[param]}')
+                    print(f'Некорректный тип параметра {param}, требуется {self.VALID_PARAMETERS[param]}')
                     ans = False
         if not os.path.isfile(dct['dataFilepath']):
             print('Введён некорректный путь к файлу данных симуляции')
@@ -87,7 +87,8 @@ class UserInput:
             correct_params = correct_params and self.check_config_parameters(config_params)
         return correct_params, config_params
 
-    def check_duplicate_columns(self, filename: str, ext: str, configs: Dict[str, Any]) -> bool:
+    @staticmethod
+    def check_duplicate_columns(filename: str, ext: str, configs: Dict[str, Any]) -> bool:
         if ext == '.csv':
             first_row = pd.read_csv(filename, nrows=1, sep=configs['csvSep'])
         else:
