@@ -1,0 +1,2 @@
+signalFreq=5900000
+dataFilepath=data_example.csv
