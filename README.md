@@ -1,6 +1,8 @@
-## User's Manual
+## User Manual
 ### 1\. Setting up and starting SUMO
 1\. Create a road network file, save the config file and road flow settings.
+
+![5G_NR_V2X_simulator](/images/SUMO_highway.png)
 
 2\. In the simulation configuration file (extension .sumocfg) add an instruction to save the simulation results in the FCD (flying cars data) format.
 
@@ -16,7 +18,9 @@ This instruction must be inserted between the &lt;configuration&gt; and &lt;/con
 
 2\. Run the command *python SUMOHOME/tools/xml/xml2csv.py FILENAME.xml*.
 
-After performing these steps, you should have a FILENAME.csv file of this form in your working directory
+After performing these steps, you should have a FILENAME.csv file that looks like this in your working directory
+
+![5G_NR_V2X_simulator](/images/FCD_processed.png)
 
 ### 3\. Starting the program
 
@@ -32,7 +36,7 @@ Valid simulation parameters:
 
 **dataFilepath** - full path to the simulation file FILENAME.csv
 
-**csvSep** - csv file delimiter, default option is semicolon
+**csvSep** - csv file delimiter, default option is *semicolon*
 
 **signalFreq** - frequency of the signal transmitted by the machines, integer
 
