@@ -239,7 +239,6 @@ class CalcProc:
         return prop_loss
 
     def calc_urban_nlos(self, dists: pd.DataFrame) -> pd.DataFrame:
-        #  TODO: change lognorm to 4
         """
         Calculate propagation loss for NLOS blockage for urban scenario
         :param dists: Distances between vehicles.

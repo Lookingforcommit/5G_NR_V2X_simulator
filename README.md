@@ -42,9 +42,13 @@ Valid simulation parameters:
 
 **signalPower** - power of the signal transmitted by the machines, integer
 
-**receptionThreshold** - minimal signal power requied for the machine receiver to process a message, integer
+**receptionThreshold** - minimal signal power requied for the machine receiver to process a message, float
 
 **envScenario** - simulation scenario, available options - *highway*, *urban*. The default scenario is *highway*.
+
+**propLossRegion** - the averaging regions for propagation loss chart, integer
+
+**packagesRegion** - the averaging regions for all the packages-based metrics, integer
 
 The program can correctly process simulation files of extensions *.csv*, *.xls* and *.xlsx*, an attempt to transfer a file of other extensions will cause an error.
 
