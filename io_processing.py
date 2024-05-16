@@ -17,7 +17,8 @@ class UserInput:
         'signalPower': int,
         'envScenario': str,
         'propLossRegion': int,
-        'packagesRegion': int
+        'packagesRegion': int,
+        'simCnt': int
     }
     DEFAULT_PARAMETERS = {
         'csvSep': ';',

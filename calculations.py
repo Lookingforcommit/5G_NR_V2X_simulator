@@ -39,8 +39,6 @@ class CalcProc:
         self.reception_threshold = reception_threshold
         self.preprocess_cords()
         self.dists = self.calc_dists()
-        self.prop_loss = self.calc_prop_loss()
-        self.reception_rate = self.calc_signal_reception()
 
     def preprocess_cords(self) -> None:
         """
@@ -76,11 +74,11 @@ class CalcProc:
                                                              signal_freq=self.signal_freq)
         return ans_df
 
-    def calc_signal_reception(self) -> pd.DataFrame:
+    def calc_signal_reception(self, prop_loss: pd.DataFrame) -> pd.DataFrame:
         """
         Calculate vehicles signal reception rate
         :return: Dataframe containing calculated signal reception
         """
-        starting_power = np.full(self.prop_loss.shape, self.signal_power)
-        reception_rate = starting_power - self.prop_loss >= self.reception_threshold
+        starting_power = np.full(prop_loss.shape, self.signal_power)
+        reception_rate = starting_power - prop_loss >= self.reception_threshold
         return reception_rate
