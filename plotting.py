@@ -39,7 +39,7 @@ class GraphPlotter:
         """
         prop_loss_labels = self.generate_distance_regions(self.prop_loss_region)
         packages_labels = self.generate_distance_regions(self.packages_region)
-        self.prop_loss_dict = {label: [] for label in prop_loss_labels}
+        self.prop_loss_dict = {label: {'prop_loss': 0, 'v_num': 0} for label in prop_loss_labels}
         self.signal_reception_dict = {label: {'correct': 0, 'total': 0} for label in packages_labels}
 
     def process_row(self, dist_row: pd.Series, prop_loss_df: pd.DataFrame, signal_reception_df: pd.DataFrame,
@@ -58,7 +58,8 @@ class GraphPlotter:
                 signal_reception_val = signal_reception_df[v1][timestamp, v0]
                 prop_loss_dist = int(np.floor(dist / self.prop_loss_region) * self.prop_loss_region)
                 packages_dist = int(np.floor(dist / self.packages_region) * self.packages_region)
-                self.prop_loss_dict[prop_loss_dist].append(prop_loss_val)
+                self.prop_loss_dict[prop_loss_dist]['prop_loss'] += prop_loss_val
+                self.prop_loss_dict[prop_loss_dist]['v_num'] += 1
                 self.signal_reception_dict[packages_dist]['correct'] += signal_reception_val
                 self.signal_reception_dict[packages_dist]['total'] += 1
 
@@ -78,7 +79,9 @@ class GraphPlotter:
         for key in self.prop_loss_dict:
             if self.prop_loss_dict[key]:
                 plot_x.append(key)
-                plot_y.append(np.mean(self.prop_loss_dict[key]))
+                prop_loss_sum = self.prop_loss_dict[key]['prop_loss']
+                v_num = self.prop_loss_dict[key]['v_num']
+                plot_y.append(prop_loss_sum / v_num)
         return plot_x, plot_y
 
     def plot_prr(self) -> Tuple[List[int], List[float]]:

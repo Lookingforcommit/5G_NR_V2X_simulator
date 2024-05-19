@@ -14,7 +14,7 @@ class DataParsingException(Exception):
 
 class ConfigException(DataParsingException):
     def __init__(self):
-        pass
+        self.error_message = None
 
     def __str__(self):
         pass
@@ -68,6 +68,14 @@ class MissingConfigParameterException(ConfigException):
 class IncorrectConfigParameterTypeException(ConfigException):
     def __init__(self, incorrect_param: str, correct_type: str):
         self.error_message = f'Некорректный тип параметра {incorrect_param}, требуется {correct_type}'
+
+    def __str__(self):
+        return self.error_message
+
+
+class PositiveConfigParameterException(ConfigException):
+    def __init__(self, incorrect_param: str):
+        self.error_message = f'Параметр {incorrect_param} должен быть положительным'
 
     def __str__(self):
         return self.error_message

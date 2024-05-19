@@ -12,13 +12,13 @@ class UserInput:
     VALID_PARAMETERS = {
         'dataFilepath': str,
         'csvSep': str,
-        'signalFreq': int,
-        'receptionThreshold': float,
-        'signalPower': int,
         'envScenario': str,
+        'signalFreq': int,
+        'signalPower': int,
         'propLossRegion': int,
         'packagesRegion': int,
-        'simCnt': int
+        'simCnt': int,
+        'receptionThreshold': float
     }
     DEFAULT_PARAMETERS = {
         'csvSep': ';',
@@ -27,6 +27,7 @@ class UserInput:
         'packagesRegion': 500
     }
     NECESSARY_PARAMETERS = VALID_PARAMETERS.keys() - DEFAULT_PARAMETERS.keys()
+    POSITIVE_PARAMETERS = {'signalFreq', 'signalPower', 'propLossRegion', 'packagesRegion', 'simCnt'}
     PANDAS_READERS = {
         '.csv': pd.read_csv,
         '.xls': pd.read_excel,
@@ -90,6 +91,8 @@ class UserInput:
                     dct[param] = self.VALID_PARAMETERS[param](dct[param])
                 except ValueError:
                     raise exceptions.IncorrectConfigParameterTypeException(param, str(self.VALID_PARAMETERS[param]))
+                if param in self.POSITIVE_PARAMETERS and dct[param] <= 0:
+                    raise exceptions.PositiveConfigParameterException(param)
         if not os.path.isfile(dct['dataFilepath']):
             raise exceptions.IncorrectSimDataPathException
         if dct['envScenario'] not in self.VALID_SCENARIOS:

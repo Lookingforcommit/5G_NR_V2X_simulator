@@ -32,33 +32,39 @@ Key1=Value
 
 Key2=Value
 
-Valid simulation parameters:
-
 **dataFilepath** - full path to the simulation file FILENAME.csv
 
-**csvSep** - csv file delimiter, default option is *semicolon*
+**csvSep** - csv file separator, default option is *semicolon*
 
-**signalFreq** - frequency of the signal transmitted by the machines, integer
+**envScenario** - simulation scenario, available options - *highway*. The default scenario is *highway*
 
-**signalPower** - power of the signal transmitted by the machines, integer
+**signalFreq** - frequency of the signal transmitted by the machines, positive integer
 
-**receptionThreshold** - minimal signal power requied for the machine receiver to process a message, float
+**signalPower** - power of the signal transmitted by the machines, positive integer
 
-**envScenario** - simulation scenario, available options - *highway*, *urban*. The default scenario is *highway*.
+**propLossRegion** - the averaging regions for propagation loss chart, positive integer. The default value is *500*
 
-**propLossRegion** - the averaging regions for propagation loss chart, integer
+**packagesRegion** - the averaging regions for all the packages-based metrics, positive integer. The default value 
+is *500*
 
-**packagesRegion** - the averaging regions for all the packages-based metrics, integer
+**simCnt** - number of simulation runs, positive integer. The default value is *1*
 
-The program can correctly process simulation files of extensions *.csv*, *.xls* and *.xlsx*, an attempt to transfer a file of other extensions will cause an error.
+**receptionThreshold** - minimal signal power required for the machine receiver to process a message, float
 
-The simulation file must be of the SUMO FCD (flying cars data) format, otherwise the program will not be able to run the simulation.
+The program can correctly process simulation files of extensions *.csv*, *.xls* and *.xlsx*, an attempt to transfer 
+a file of other extension will cause an error.
+
+The simulation file must be of the SUMO FCD (flying cars data) format, otherwise the program will not be able to run
+the simulation.
 
 2\. Run the program through the command line
 
-**Important:** the program perceives the path to the simulation data file relative to its position in the file system, so if your configuration file is not in the same folder as the program, the absolute path to the simulation data file must be passed as the **dataFilepath** parameter.
+**Important:** the program perceives the path to the simulation data file relative to the script position in the file
+system, so if your configuration file is not in the same folder as the program, the absolute path to the simulation data
+file must be passed as the **dataFilepath** parameter.
 
 ### 4\. Analysing simulation results
-The program returns a set of signal reception metrics, which show how effective the cars were at communicating with each other.
+The program returns a set of signal reception metrics, which show how effective the cars were at communicating 
+with each other.
 
 ![5G_NR_V2X_simulator](/images/metrics.png)
