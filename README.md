@@ -63,8 +63,8 @@ file must be passed as the **dataFilepath** parameter.
 The program returns a set of signal reception metrics, which show how effective the cars were at communicating 
 with each other.
 
-![5G_NR_V2X_simulator](/images/metrics/PL.eps)
+![](/images/metrics/PL.png)
 
-![5G_NR_V2X_simulator](/images/metrics/PLR.eps)
+![](/images/metrics/PLR.png)
 
-![5G_NR_V2X_simulator](/images/metrics/PRR.eps)
+![](/images/metrics/PRR.png)
