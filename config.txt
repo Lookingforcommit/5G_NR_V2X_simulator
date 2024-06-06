@@ -1,5 +1,5 @@
 signalFreq=5900000000
 signalPower=23
 receptionThreshold=-103.75
-dataFilepath=data_example.csv
+dataFilepath=examples/light_data.csv
 simCnt=1

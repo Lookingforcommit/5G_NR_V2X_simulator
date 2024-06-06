@@ -1,4 +1,5 @@
 ## User Manual
+This project has a Russian [documentation](https://www.overleaf.com/read/vdztcprygdmj#011a6f) on overleaf
 ### 1\. Setting up and starting SUMO
 1\. Create a road network file, save the config file and road flow settings.
 
@@ -18,15 +19,13 @@ This instruction must be inserted between the &lt;configuration&gt; and &lt;/con
 
 2\. Run the command *python SUMOHOME/tools/xml/xml2csv.py FILENAME.xml*.
 
-After performing these steps, you should have a FILENAME.csv file of this format in your working directory
+After performing these steps, you should have a FILENAME.csv file of the SUMO FCD format in your working directory
 
 ![5G_NR_V2X_simulator](/images/FCD_processed.png)
 
 ### 3\. Starting the program
 
-1\. Create a simulation configuration file in .txt format
-
-The configuration file should have the following format:
+1\. Create a simulation configuration file of the following format:
 
 Key1=Value
 
@@ -54,9 +53,6 @@ is *500*
 The program can correctly process simulation files of extensions *.csv*, *.xls* and *.xlsx*, an attempt to transfer 
 a file of other extension will cause an error.
 
-The simulation file must be of the SUMO FCD (flying cars data) format, otherwise the program will not be able to run
-the simulation.
-
 2\. Run the program through the command line
 
 **Important:** the program perceives the path to the simulation data file relative to the script position in the file
@@ -67,4 +63,8 @@ file must be passed as the **dataFilepath** parameter.
 The program returns a set of signal reception metrics, which show how effective the cars were at communicating 
 with each other.
 
-![5G_NR_V2X_simulator](/images/metrics.png)
+![5G_NR_V2X_simulator](/images/metrics/PL.eps)
+
+![5G_NR_V2X_simulator](/images/metrics/PLR.eps)
+
+![5G_NR_V2X_simulator](/images/metrics/PRR.eps)

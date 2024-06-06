@@ -1,5 +1,5 @@
 from datetime import datetime
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 
 import exceptions
 from io_processing import UserInput
@@ -22,7 +22,7 @@ if __name__ == '__main__':
             plotter.generate_distance_data_dependencies(prop_loss, signal_reception)
         plotter.plot_metrics()
         total_time = datetime.now() - start_time
-        print(f'Время симуляции: {total_time.total_seconds()} секунд')
         plt.show()
+        print(f'Время симуляции: {total_time.total_seconds()} секунд')
     except exceptions.DataParsingException as exc:
         print(exc)

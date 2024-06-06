@@ -11,6 +11,7 @@ class GraphPlotter:
     The graphics plotter class which visualises calculated metrics
     """
     METRICS_PATH = 'metrics'
+    PROBABILITIES_TICKS_CNT = 10
 
     def __init__(self, dists: pd.DataFrame, prop_loss_region: int, packages_region: int):
         self.dists = dists
@@ -71,7 +72,7 @@ class GraphPlotter:
             new_df = new_df.droplevel(0)
             new_df.apply(self.process_row, axis=1, args=(prop_loss, signal_reception, timestamp))
 
-    def plot_prop_loss(self) -> Tuple[List[int], List[float]]:
+    def create_prop_loss_plots(self) -> Tuple[List[int], List[float]]:
         """
         Plot propagation loss values averaged by distance
         """
@@ -84,7 +85,7 @@ class GraphPlotter:
                 plot_y.append(prop_loss_sum / v_num)
         return plot_x, plot_y
 
-    def plot_prr(self) -> Tuple[List[int], List[float]]:
+    def create_prr_plots(self) -> Tuple[List[int], List[float]]:
         """
         Plot packet reception ratio values averaged by distance
         """
@@ -97,7 +98,7 @@ class GraphPlotter:
                 plot_y.append(correct / total)
         return plot_x, plot_y
 
-    def plot_plr(self) -> Tuple[List[int], List[float]]:
+    def create_plr_plots(self) -> Tuple[List[int], List[float]]:
         """
         Plot propagation loss ratio values averaged by distance
         """
@@ -111,22 +112,48 @@ class GraphPlotter:
                 plot_y.append(incorrect / total)
         return plot_x, plot_y
 
+    def plot_prop_loss(self, ax: plt.Axes, fig: plt.Figure, dir_path: str):
+        x_plots, y_plots = self.create_prop_loss_plots()
+        ax.set_title('PL (propagation loss)')
+        ax.plot(x_plots, y_plots)
+        ax.set_ylabel('PL', labelpad=12, rotation='horizontal')
+        fig.savefig(fname=f'{dir_path}/PL.eps', format='eps')
+
+    def plot_prr(self, ax: plt.Axes, probabilities_ticks: List[float], fig: plt.Figure, dir_path: str):
+        x_plots, y_plots = self.create_prr_plots()
+        ax.set_title('PRR (packet reception ratio)')
+        ax.plot(x_plots, y_plots)
+        ax.set_yticks(probabilities_ticks, probabilities_ticks)
+        ax.set_ylabel('PRR', labelpad=12, rotation='horizontal')
+        fig.savefig(fname=f'{dir_path}/PRR.eps', format='eps')
+
+    def plot_plr(self, ax: plt.Axes, probabilities_ticks: List[float], fig: plt.Figure, dir_path: str):
+        x_plots, y_plots = self.create_plr_plots()
+        ax.set_title('PLR (packet loss ratio)')
+        ax.plot(x_plots, y_plots)
+        ax.set_yticks(probabilities_ticks, probabilities_ticks)
+        ax.set_ylabel('PLR', labelpad=12, rotation='horizontal')
+        fig.savefig(fname=f'{dir_path}/PLR.eps', format='eps')
+
     def plot_metrics(self) -> None:
         """
         Plot the simulation metrics using matplotlib and save it
         """
-        fig, (ax0, ax1, ax2) = plt.subplots(nrows=1, ncols=3, figsize=(12, 6))
-        prop_loss_x, prop_loss_y = self.plot_prop_loss()
-        packet_rec_x, packet_rec_y = self.plot_prr()
-        packet_loss_x, packet_loss_y = self.plot_plr()
-        fig.suptitle('Simulation metrics')
-        ax0.set_title('PL (propagation loss)')
-        ax0.plot(prop_loss_x, prop_loss_y)
-        ax1.set_title('PRR (packet reception ratio)')
-        ax1.plot(packet_rec_x, packet_rec_y)
-        ax2.set_title('PLR (packet loss ratio)')
-        ax2.plot(packet_loss_x, packet_loss_y)
+        prop_loss_fig, prop_loss_ax = plt.subplots()
+        prr_fig, prr_ax = plt.subplots()
+        plr_fig, plr_ax = plt.subplots()
+        # fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(12, 6))
+        axes = [prop_loss_ax, prr_ax, plr_ax]
+        for el in axes:
+            el.grid()
+            el.margins(x=0, y=0)
+            el.set_xlabel('Distance (m)')
+        prop_loss_ax, prr_ax, plr_ax = axes[0], axes[1], axes[2]
+        probabilities_ticks = [i / self.PROBABILITIES_TICKS_CNT for i in range(0, self.PROBABILITIES_TICKS_CNT + 1)]
         if not os.path.exists(self.METRICS_PATH):
             os.mkdir(self.METRICS_PATH)
-        filename = datetime.now().strftime('%H_%M_%S_%d_%m_%Y')
-        fig.savefig(fname=f'{self.METRICS_PATH}/{filename}.png', format='png')
+        dir_path = self.METRICS_PATH + '/' + datetime.now().strftime('%H_%M_%S_%d_%m_%Y')
+        os.mkdir(dir_path)
+        self.plot_prop_loss(prop_loss_ax, prop_loss_fig, dir_path)
+        self.plot_prr(prr_ax, probabilities_ticks, prr_fig, dir_path)
+        self.plot_plr(plr_ax, probabilities_ticks, plr_fig, dir_path)

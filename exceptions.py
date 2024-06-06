@@ -81,7 +81,7 @@ class PositiveConfigParameterException(ConfigException):
         return self.error_message
 
 
-class IncorrectSimDataPathException(SimDataException):
+class IncorrectSimDataPathException(ConfigException):
     def __init__(self):
         self.error_message = 'Введён некорректный путь к файлу данных симуляции'
 
@@ -89,7 +89,7 @@ class IncorrectSimDataPathException(SimDataException):
         return self.error_message
 
 
-class IncorrectSimScenarioException(SimDataException):
+class IncorrectSimScenarioException(ConfigException):
     def __init__(self, incorrect_scenario: str, valid_options: List[str]):
         error_message = f'Введён некорректный сценарий симуляции {incorrect_scenario}, доступные опции:'
         valid_options = '\n'.join(valid_options)
